@@ -16,6 +16,7 @@
 		6C66B58429B28A8900AE43EE /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C66B58329B28A8900AE43EE /* LoginViewModel.swift */; };
 		6C66B58729B28AE800AE43EE /* ApiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C66B58629B28AE800AE43EE /* ApiClient.swift */; };
 		6C66B58929B28BC900AE43EE /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C66B58829B28BC900AE43EE /* User.swift */; };
+		6CFA949E2A2513B30009BBF5 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CFA949D2A2513B30009BBF5 /* HomeView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		6C66B58329B28A8900AE43EE /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		6C66B58629B28AE800AE43EE /* ApiClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiClient.swift; sourceTree = "<group>"; };
 		6C66B58829B28BC900AE43EE /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		6CFA949D2A2513B30009BBF5 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +64,7 @@
 		6C66B56D29B28A0F00AE43EE /* LoginMVVM */ = {
 			isa = PBXGroup;
 			children = (
+				6CFA949C2A2513A90009BBF5 /* Home */,
 				6C66B56E29B28A0F00AE43EE /* AppDelegate.swift */,
 				6C66B57029B28A0F00AE43EE /* SceneDelegate.swift */,
 				6C66B58229B28A7800AE43EE /* Login */,
@@ -90,6 +93,14 @@
 				6C66B58829B28BC900AE43EE /* User.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		6CFA949C2A2513A90009BBF5 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				6CFA949D2A2513B30009BBF5 /* HomeView.swift */,
+			);
+			path = Home;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -164,6 +175,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6C66B58429B28A8900AE43EE /* LoginViewModel.swift in Sources */,
+				6CFA949E2A2513B30009BBF5 /* HomeView.swift in Sources */,
 				6C66B57329B28A0F00AE43EE /* LoginView.swift in Sources */,
 				6C66B58929B28BC900AE43EE /* User.swift in Sources */,
 				6C66B56F29B28A0F00AE43EE /* AppDelegate.swift in Sources */,

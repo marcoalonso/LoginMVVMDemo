@@ -124,6 +124,17 @@ class LoginView: UIViewController {
         loginViewModel.$errorMessage
             .assign(to: \UILabel.text!, on: errorLabel)
             .store(in: &cancellables)
+        
+        ///Se crea un binding de la propiedad userModel para hacer la navegacion
+        ///Escuchamos cuando ocurre un cambio para detonar una accion, (navegar home)
+        
+        loginViewModel.$userModel.sink { [weak self] user in
+            guard let user = user else { return }
+            print("Success, go home, user: \(user)")
+            let homeView = HomeView()
+            homeView.user = user
+            self?.present(homeView, animated: true)
+        }.store(in: &cancellables)
     }
 
 }
