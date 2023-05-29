@@ -16,7 +16,7 @@ final class ApiClient {
     
     func login(withEmail email: String, password: String) async throws -> User {
         ///Simular peticion HTTP y esperar 1 seg
-        try await Task.sleep(nanoseconds: NSEC_PER_SEC * 1)
+        try await Task.sleep(nanoseconds: NSEC_PER_SEC * 3)
         return try simulateBackendLogic(email: email, password: password)
     }
 }

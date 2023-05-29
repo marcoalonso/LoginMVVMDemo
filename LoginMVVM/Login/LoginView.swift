@@ -53,6 +53,8 @@ class LoginView: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        ///Primero se necesita hacer el binding (establecer las conexiones vista ---> viewModel ---> vista
         createBindingViewWithViewModel()
         
         
@@ -77,6 +79,7 @@ class LoginView: UIViewController {
         ])
     }
     
+    ///-* Se manda llamar al pulsar el boton de la vista
     func startLogin() {
         loginViewModel.userLogin(withEmail: emailTextField.text?.lowercased() ?? "", password: passwordTextField.text?.lowercased() ?? "")
     }
@@ -90,14 +93,22 @@ class LoginView: UIViewController {
             .assign(to: \LoginViewModel.password, on: loginViewModel)
             .store(in: &cancellables)
         
+        ///Se crea el binding del viewModel hacia un elemento de esta vista(loginButton)
+        ///Queremos conectar la propiedad $isEnabled del viewModel con la propiedad isEnabled de loginButton
         loginViewModel.$isEnabled
             .assign(to: \.isEnabled, on: loginButton)
+            .store(in: &cancellables) ///Se guarda la referencia en una variable
+        
+        ///Se crea un binding de la propiedad showLoading para mostrar/ocultar un activity indicator
+        loginViewModel.$showLoading
+            .assign(to: \.configuration!.showsActivityIndicator, on: loginButton)
             .store(in: &cancellables)
     }
 
 }
 
 extension UITextField {
+    ///Puede publicar 1 notificacion cada vez que se cambia el valor del textField string y no retornara error
     var textPublisher: AnyPublisher<String, Never> {
         return NotificationCenter.default.publisher(for: UITextField.textDidChangeNotification, object: self).map { notification in
             return (notification.object as? UITextField)?.text ?? ""

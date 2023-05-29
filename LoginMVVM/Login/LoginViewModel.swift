@@ -10,9 +10,11 @@ import Foundation
 import Combine
 
 class LoginViewModel {
+    ///*- Estas propiedades son de tipo Binding*
     @Published var email = ""
     @Published var password = ""
     @Published var isEnabled = false
+    @Published var showLoading = false
     
     var cancellables = Set<AnyCancellable>()
     
@@ -25,6 +27,7 @@ class LoginViewModel {
     }
     
     func formValidation() {
+        ///- Combina y selecciona el ultimo valor de cada uno de ellos
         Publishers.CombineLatest($email, $password)
             .filter { email, password in
                 return email.count > 5 && password.count > 5
@@ -34,15 +37,18 @@ class LoginViewModel {
         }.store(in: &cancellables)
     }
     
-    @MainActor
+    ///- * Se ejecuta al hacer click en el boton de login de la vista
+    @MainActor ///- * Hilo principal 
     func userLogin(withEmail email: String,
                    password: String) {
+        showLoading = true
         Task {
             do {
                 let userModel = try await apiClient.login(withEmail: email, password: password)
             } catch let error as BackendError {
                 print("Debug: error \(error.localizedDescription)")
             }
+            showLoading = false
         }
     }
     
