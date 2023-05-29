@@ -49,6 +49,15 @@ class LoginView: UIViewController {
         return button
     }()
     
+    private let errorLabel: UILabel = {
+       let label = UILabel()
+        label.text = ""
+        label.numberOfLines = 0
+        label.textColor = .red
+        label.font = .systemFont(ofSize: 20, weight: .regular, width: .condensed)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
   
 
     override func viewDidLoad() {
@@ -60,7 +69,10 @@ class LoginView: UIViewController {
         
         
         [
-            emailTextField, passwordTextField, loginButton
+            emailTextField,
+            passwordTextField,
+            loginButton,
+            errorLabel
         ].forEach(view.addSubview)
         
         NSLayoutConstraint.activate([
@@ -75,7 +87,10 @@ class LoginView: UIViewController {
             passwordTextField.bottomAnchor.constraint(equalTo: loginButton.topAnchor, constant: -20),
             
             loginButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            loginButton.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+            loginButton.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            
+            errorLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            errorLabel.topAnchor.constraint(equalTo: loginButton.bottomAnchor, constant: 20)
         ])
     }
     
@@ -84,6 +99,7 @@ class LoginView: UIViewController {
         loginViewModel.userLogin(withEmail: emailTextField.text?.lowercased() ?? "", password: passwordTextField.text?.lowercased() ?? "")
     }
 
+    ///* Con estos bindings escuchamos todos los cambios del viewModel a pesar de que el viewModel no tiene idea de la view, y en base a esos cambios actualizamos la UI
     func createBindingViewWithViewModel(){
         emailTextField.textPublisher
             .assign(to: \LoginViewModel.email, on: loginViewModel)
@@ -102,6 +118,11 @@ class LoginView: UIViewController {
         ///Se crea un binding de la propiedad showLoading para mostrar/ocultar un activity indicator
         loginViewModel.$showLoading
             .assign(to: \.configuration!.showsActivityIndicator, on: loginButton)
+            .store(in: &cancellables)
+        
+        ///Se crea un binding de la propiedad errorMessage para mostrar/ocultar si hay un error en el login
+        loginViewModel.$errorMessage
+            .assign(to: \UILabel.text!, on: errorLabel)
             .store(in: &cancellables)
     }
 

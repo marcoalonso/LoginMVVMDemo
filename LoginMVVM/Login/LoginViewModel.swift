@@ -15,6 +15,7 @@ class LoginViewModel {
     @Published var password = ""
     @Published var isEnabled = false
     @Published var showLoading = false
+    @Published var errorMessage = ""
     
     var cancellables = Set<AnyCancellable>()
     
@@ -41,12 +42,13 @@ class LoginViewModel {
     @MainActor ///- * Hilo principal 
     func userLogin(withEmail email: String,
                    password: String) {
+        errorMessage = ""
         showLoading = true
         Task {
             do {
                 let userModel = try await apiClient.login(withEmail: email, password: password)
             } catch let error as BackendError {
-                print("Debug: error \(error.localizedDescription)")
+                errorMessage = error.rawValue
             }
             showLoading = false
         }
